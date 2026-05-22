@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AML Modest Clothes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400..700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+  :root {
+    --cream:#FAF6F1; --warm-white:#FFFDF9;
+    --brown-dark:#5C3D2E; --brown-mid:#8B5E3C;
+    --brown-light:#C4956A; --brown-pale:#E8D5C0;
+    --brown-softest:#F5EDE3; --gold:#C4956A;
+    --text-dark:#3A2518; --text-mid:#6B4C35;
+    --text-light:#9B7B60; --shadow:rgba(92,61,46,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden}
+
+  .page{display:none;min-height:100vh}
+  .page.active{display:block}
+
+  /* HEADER */
+  header{background:var(--warm-white);border-bottom:1px solid var(--brown-pale);position:sticky;top:0;z-index:100;box-shadow:0 2px 20px var(--shadow)}
+  .header-inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo-area{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer}
+  .logo-area img{height:56px;width:auto;object-fit:contain}
+  .site-title{font-family:'El Messiri',sans-serif;font-size:1.4rem;color:var(--brown-dark);line-height:1.2}
+  nav{display:flex;gap:8px;align-items:center}
+  nav a{text-decoration:none;color:var(--text-mid);font-size:0.95rem;font-weight:500;padding:8px 14px;border-radius:24px;transition:all .25s;cursor:pointer}
+  nav a:hover{background:var(--brown-softest);color:var(--brown-dark)}
+  .cart-btn{background:var(--brown-dark);color:white!important;border-radius:24px!important;padding:8px 18px!important;display:flex;align-items:center;gap:6px;transition:background .25s!important}
+  .cart-btn:hover{background:var(--brown-mid)!important}
+  .cart-count{background:var(--gold);color:white;border-radius:50%;width:20px;height:20px;font-size:.7rem;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,var(--brown-softest) 0%,var(--cream) 50%,var(--brown-pale) 100%);text-align:center;padding:80px 24px 60px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(196,149,106,.15),transparent 70%);pointer-events:none}
+  .hero::after{content:'';position:absolute;bottom:-60px;left:-60px;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(139,94,60,.10),transparent 70%);pointer-events:none}
+  .hero-tagline{font-family:'El Messiri',sans-serif;font-size:clamp(1.5rem,4vw,2.6rem);color:var(--brown-dark);line-height:1.6;margin-bottom:16px;animation:fadeUp .9s ease forwards;opacity:0}
+  .hero-sub{color:var(--text-light);font-size:1rem;font-weight:300;animation:fadeUp .9s .2s ease forwards;opacity:0}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+  /* SECTION TITLES */
+  .section-title{font-family:'El Messiri',sans-serif;font-size:1.7rem;color:var(--brown-dark);margin-bottom:8px;display:flex;align-items:center;gap:12px}
+  .section-title::after{content:'';flex:1;height:1px;background:linear-gradient(to left,transparent,var(--brown-pale))}
+  .section-sub{color:var(--text-light);font-size:.9rem;margin-bottom:30px}
+
+  /* SHOP */
+  .shop-section{max-width:1200px;margin:0 auto;padding:50px 24px}
+  .tabs{display:flex;border:2px solid var(--brown-pale);border-radius:32px;overflow:hidden;width:fit-content;margin-bottom:36px;background:var(--warm-white)}
+  .tab-btn{padding:10px 28px;border:none;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:.95rem;font-weight:500;background:transparent;color:var(--text-light);transition:all .3s;border-radius:30px}
+  .tab-btn.active{background:var(--brown-dark);color:white}
+  .tab-btn:hover:not(.active){background:var(--brown-softest);color:var(--brown-dark)}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block;animation:fadeUp .4s ease}
+
+  /* PRODUCT GRID */
+  .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:24px}
+  .product-card{background:var(--warm-white);border-radius:18px;overflow:hidden;box-shadow:0 2px 16px var(--shadow);transition:transform .3s,box-shadow .3s}
+  .product-card:hover{transform:translateY(-6px);box-shadow:0 10px 32px rgba(92,61,46,.18)}
+  .product-img-wrap{position:relative;background:var(--brown-softest);aspect-ratio:3/4;overflow:hidden}
+  .product-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+  .product-card:hover .product-img-wrap img{transform:scale(1.05)}
+  .product-badge{position:absolute;top:12px;right:12px;background:var(--brown-dark);color:white;font-size:.72rem;padding:4px 10px;border-radius:20px;font-weight:600}
+  .product-info{padding:16px}
+  .product-name{font-family:'El Messiri',sans-serif;font-size:1rem;color:var(--text-dark);margin-bottom:6px}
+  .product-price{color:var(--brown-mid);font-weight:700;font-size:1.05rem;margin-bottom:12px}
+  .details-btn{width:100%;padding:9px;background:var(--brown-dark);color:white;border:none;border-radius:10px;font-family:'Tajawal',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:background .25s;display:flex;align-items:center;justify-content:center;gap:5px}
+  .details-btn:hover{background:var(--brown-mid)}
+
+  /* DIVIDER */
+  .divider{height:1px;background:linear-gradient(to right,transparent,var(--brown-pale),transparent);margin:4px 24px 40px}
+
+  /* SOCIAL */
+  .social-section{background:var(--brown-dark);padding:48px 24px;text-align:center}
+  .social-title{font-family:'El Messiri',sans-serif;color:var(--brown-pale);font-size:1.4rem;margin-bottom:6px}
+  .social-sub{color:var(--brown-light);font-size:.9rem;margin-bottom:32px}
+  .social-btns{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+  .social-link{display:flex;align-items:center;gap:10px;padding:14px 28px;border-radius:50px;text-decoration:none;font-family:'Tajawal',sans-serif;font-weight:600;font-size:.95rem;transition:transform .25s,box-shadow .25s;min-width:160px;justify-content:center}
+  .social-link:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .social-link.instagram{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white}
+  .social-link.facebook{background:#1877F2;color:white}
+  .social-link.whatsapp{background:#25D366;color:white}
+  .social-link .material-icons{font-size:1.3rem}
+  .social-link img{width:28px;height:28px;object-fit:contain;border-radius:4px}
+
+  /* CHECKOUT MODAL */
+  .modal-overlay{position:fixed;inset:0;background:rgba(58,37,24,.5);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+  .modal-overlay.open{opacity:1;pointer-events:all}
+  .modal-box{background:var(--warm-white);border-radius:24px;padding:32px 28px;width:min(420px,90vw);box-shadow:0 16px 48px rgba(58,37,24,.25);transform:translateY(20px);transition:transform .3s;text-align:center}
+  .modal-overlay.open .modal-box{transform:translateY(0)}
+  .modal-title{font-family:'El Messiri',sans-serif;font-size:1.4rem;color:var(--brown-dark);margin-bottom:8px}
+  .modal-sub{color:var(--text-light);font-size:.9rem;margin-bottom:28px}
+  .modal-btns{display:flex;flex-direction:column;gap:12px}
+  .modal-btn{display:flex;align-items:center;gap:14px;padding:14px 20px;border:none;border-radius:16px;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:700;transition:transform .2s,box-shadow .2s;width:100%}
+  .modal-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.18)}
+  .modal-btn.wa{background:#25D366;color:white}
+  .modal-btn.ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white}
+  .modal-btn img{width:32px;height:32px;object-fit:contain;border-radius:6px;flex-shrink:0}
+  .modal-btn-text{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+  .modal-btn-label{font-size:1rem;font-weight:700}
+  .modal-btn-desc{font-size:.78rem;opacity:.85;font-weight:400}
+  .modal-cancel{margin-top:12px;background:none;border:none;color:var(--text-light);cursor:pointer;font-family:'Tajawal',sans-serif;font-size:.9rem;padding:6px;display:block;margin-left:auto;margin-right:auto}
+
+  /* SHIPPING FORM */
+  .modal-box{max-height:90vh;overflow-y:auto}
+  .ship-form{display:flex;flex-direction:column;gap:12px;margin-top:4px;text-align:right}
+  .field-wrap{display:flex;flex-direction:column;gap:4px}
+  .field-label{font-size:.88rem;font-weight:600;color:var(--text-dark)}
+  .req{color:#c0392b}
+  .opt{color:var(--text-light);font-weight:400;font-size:.8rem}
+  .field-input{padding:10px 14px;border:1.5px solid var(--brown-pale);border-radius:12px;font-family:'Tajawal',sans-serif;font-size:.95rem;color:var(--text-dark);background:var(--warm-white);transition:border-color .2s;outline:none;width:100%}
+  .field-input:focus{border-color:var(--brown-mid)}
+  .field-input.error{border-color:#c0392b}
+  .field-select{cursor:pointer;appearance:auto}
+  .field-textarea{resize:vertical;min-height:72px}
+  .field-err{color:#c0392b;font-size:.78rem;display:none}
+  .field-err.show{display:block}
+  .step-next-btn{flex:1;padding:12px;background:var(--brown-dark);color:white;border:none;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .25s}
+  .step-next-btn:hover{background:var(--brown-mid)}
+  .back-step-btn{background:none;border:none;color:var(--brown-mid);cursor:pointer;font-family:'Tajawal',sans-serif;font-size:.88rem;font-weight:600;padding:0 0 12px;display:flex;align-items:center;gap:4px}
+
+  footer{background:var(--text-dark);color:var(--brown-pale);text-align:center;padding:24px;font-size:.85rem}
+
+  /* CART DRAWER */
+  .overlay{position:fixed;inset:0;background:rgba(58,37,24,.4);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+  .overlay.open{opacity:1;pointer-events:all}
+  .cart-drawer{position:fixed;top:0;left:0;width:min(380px,100vw);height:100%;background:var(--warm-white);z-index:300;transform:translateX(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:4px 0 32px var(--shadow)}
+  .cart-drawer.open{transform:translateX(0)}
+  .cart-header{padding:20px 20px 16px;border-bottom:1px solid var(--brown-pale);display:flex;align-items:center;justify-content:space-between}
+  .cart-title{font-family:'El Messiri',sans-serif;font-size:1.3rem;color:var(--brown-dark)}
+  .close-btn{background:var(--brown-softest);border:none;cursor:pointer;width:36px;height:36px;border-radius:50%;font-size:1.1rem;color:var(--text-mid);display:flex;align-items:center;justify-content:center;transition:background .2s}
+  .close-btn:hover{background:var(--brown-pale)}
+  .cart-items{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px}
+  .cart-item{display:flex;gap:12px;align-items:center;background:var(--brown-softest);border-radius:12px;padding:10px}
+  .cart-item img{width:60px;height:76px;object-fit:cover;border-radius:8px}
+  .cart-item-info{flex:1}
+  .cart-item-name{font-size:.9rem;font-weight:600;color:var(--text-dark);margin-bottom:2px}
+  .cart-item-size{font-size:.78rem;color:var(--text-light);margin-bottom:4px}
+  .cart-item-price{font-size:.85rem;color:var(--brown-mid);font-weight:700}
+  .cart-item-qty{display:flex;align-items:center;gap:8px;margin-top:6px}
+  .qty-btn{background:var(--warm-white);border:1px solid var(--brown-pale);width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:1rem;color:var(--brown-dark);display:flex;align-items:center;justify-content:center;transition:background .2s}
+  .qty-btn:hover{background:var(--brown-pale)}
+  .remove-item{background:none;border:none;cursor:pointer;color:var(--text-light);font-size:1.1rem;padding:4px;transition:color .2s}
+  .remove-item:hover{color:#c0392b}
+  .cart-empty{text-align:center;color:var(--text-light);padding:48px 0;font-size:.95rem}
+  .cart-footer{padding:20px;border-top:1px solid var(--brown-pale)}
+  .cart-total{display:flex;justify-content:space-between;font-weight:700;font-size:1.05rem;color:var(--brown-dark);margin-bottom:14px}
+  .checkout-btn{width:100%;padding:14px;background:var(--brown-dark);color:white;border:none;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:background .25s}
+  .checkout-btn:hover{background:var(--brown-mid)}
+
+  .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--brown-dark);color:white;padding:12px 24px;border-radius:50px;font-size:.9rem;z-index:999;transition:transform .3s;white-space:nowrap}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+
+  /* ── DETAIL PAGE ── */
+  .detail-page{background:var(--cream)}
+  .detail-back{display:inline-flex;align-items:center;gap:6px;background:var(--brown-softest);border:none;cursor:pointer;color:var(--brown-dark);font-family:'Tajawal',sans-serif;font-size:.95rem;font-weight:600;padding:10px 20px;border-radius:24px;margin:24px 24px 0;transition:background .2s}
+  .detail-back:hover{background:var(--brown-pale)}
+  .detail-body{max-width:960px;margin:0 auto;padding:30px 24px 60px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+  .detail-img-main{aspect-ratio:3/4;border-radius:20px;overflow:hidden;background:var(--brown-softest);box-shadow:0 4px 24px var(--shadow)}
+  .detail-img-main img{width:100%;height:100%;object-fit:cover}
+  .detail-info{display:flex;flex-direction:column;gap:20px}
+  .detail-name{font-family:'El Messiri',sans-serif;font-size:1.8rem;color:var(--brown-dark);line-height:1.3}
+  .detail-price{font-size:1.4rem;font-weight:700;color:var(--brown-mid)}
+  .detail-section-label{font-family:'El Messiri',sans-serif;font-size:1rem;color:var(--brown-dark);margin-bottom:10px;border-bottom:1px solid var(--brown-pale);padding-bottom:6px}
+
+  /* SIZE BUTTONS */
+  .sizes-btns{display:flex;flex-direction:column;gap:8px}
+  .size-btn{background:var(--warm-white);border:2px solid var(--brown-pale);border-radius:12px;padding:10px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;font-family:'Tajawal',sans-serif;width:100%}
+  .size-btn:hover{border-color:var(--brown-light);background:var(--brown-softest)}
+  .size-btn.selected{border-color:var(--brown-dark);background:var(--brown-softest);box-shadow:0 0 0 2px var(--brown-dark)}
+  .size-tag{background:var(--brown-dark);color:white;border-radius:8px;padding:4px 12px;font-size:.85rem;font-weight:700;white-space:nowrap;transition:background .2s}
+  .size-btn.selected .size-tag{background:var(--brown-mid)}
+  .size-desc-txt{color:var(--text-mid);font-size:.9rem}
+  .size-required-msg{color:#c0392b;font-size:.83rem;margin-top:2px;display:none}
+  .size-required-msg.show{display:block}
+
+  .colors-note-detail{background:var(--brown-softest);border-radius:12px;padding:14px 16px;color:var(--text-mid);font-size:.92rem;line-height:1.6}
+  .detail-add-btn{padding:14px;background:var(--brown-dark);color:white;border:none;border-radius:14px;font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:background .25s}
+  .detail-add-btn:hover{background:var(--brown-mid)}
+
+  @media(max-width:700px){
+    .detail-body{grid-template-columns:1fr}
+    .header-inner{flex-wrap:wrap}
+    nav{order:3;width:100%;justify-content:center}
+    .hero{padding:50px 20px 40px}
+    .social-btns{flex-direction:column;align-items:center}
+    .social-link{width:100%;max-width:280px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-area" onclick="goHome()">
+      <img src="https://drive.google.com/thumbnail?id=1NK3poi7l0jqFSfhk8sig490geYi3ak5J&sz=w200" alt="AML Logo" onerror="this.style.display='none'">
+      <span class="site-title">AML Modest Clothes</span>
+    </div>
+    <nav>
+      <a onclick="goHome()">المتجر</a>
+      <a onclick="goHome();setTimeout(()=>document.getElementById('social').scrollIntoView({behavior:'smooth'}),100)">تواصلي معنا</a>
+      <a class="cart-btn" onclick="openCart();return false;">
+        <span class="material-icons" style="font-size:1.1rem">shopping_cart</span>
+        السلة <span class="cart-count" id="cartCount">0</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <p class="hero-tagline">« من القلب نصمم ... و بإسم الأمل نقدم ستايلاً مختلفاً »</p>
+    <p class="hero-sub">ملابس محجبات بتصاميم عصرية تجمع بين الأناقة والأصالة</p>
+  </section>
+
+  <section class="shop-section" id="shop">
+    <h2 class="section-title">🛍️ المتجر</h2>
+    <p class="section-sub">اختاري من مجموعاتنا المتنوعة</p>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('winter',this)">❄️ الشتوي</button>
+      <button class="tab-btn" onclick="switchTab('summer',this)">☀️ الصيفي</button>
+    </div>
+    <div class="tab-panel active" id="tab-winter">
+      <div class="products-grid" id="grid-winter"></div>
+    </div>
+    <div class="tab-panel" id="tab-summer">
+      <div class="products-grid" id="grid-summer"></div>
+    </div>
+  </section>
+
+  <section class="social-section" id="social">
+    <p class="social-title">تواصلي معنا</p>
+    <p class="social-sub">نتواجد على جميع منصات التواصل الاجتماعي</p>
+    <div class="social-btns">
+      <a class="social-link instagram" href="https://www.instagram.com/byaml_eg?hl=ar" target="_blank">
+        <img src="https://drive.google.com/thumbnail?id=1TDVY3iGAIlqFErhMLyP5zKw4k94P54gx&sz=w60" alt="Instagram"> إنستجرام
+      </a>
+      <a class="social-link facebook" href="https://www.facebook.com/profile.php?id=61560907025097" target="_blank">
+        <img src="https://drive.google.com/thumbnail?id=1FNudTNv7Bnc4KAqwPgo7QCBdTNx4ci4Q&sz=w60" alt="Facebook"> فيسبوك
+      </a>
+      <a class="social-link whatsapp" href="https://wa.me/201211523707" target="_blank">
+        <img src="https://drive.google.com/thumbnail?id=1J-M5eYusdkO13sSjNn3l_cNwfzSMLOUF&sz=w60" alt="WhatsApp"> واتساب
+      </a>
+    </div>
+  </section>
+  <footer><p>© 2025 AML Modest Clothes · جميع الحقوق محفوظة</p></footer>
+</div>
+
+<!-- DETAIL PAGE -->
+<div class="page detail-page" id="page-detail">
+  <button class="detail-back" onclick="goHome()">
+    <span class="material-icons" style="font-size:1rem">arrow_forward_ios</span> العودة للمتجر
+  </button>
+  <div class="detail-body">
+    <div class="detail-img-main">
+      <img id="detail-img" src="" alt="">
+    </div>
+    <div class="detail-info">
+      <h1 class="detail-name" id="detail-name"></h1>
+      <p class="detail-price" id="detail-price"></p>
+
+      <div>
+        <p class="detail-section-label">📏 اختاري مقاسك</p>
+        <div class="sizes-btns" id="sizes-btns">
+          <button class="size-btn" onclick="selectSize(this,'مقاس ١ (50–85 كيلو)')">
+            <span class="size-tag">مقاس ١</span>
+            <span class="size-desc-txt">من 50 إلى 85 كيلو</span>
+          </button>
+          <button class="size-btn" onclick="selectSize(this,'مقاس ٢ (90–100 كيلو)')">
+            <span class="size-tag">مقاس ٢</span>
+            <span class="size-desc-txt">من 90 إلى 100 كيلو</span>
+          </button>
+          <button class="size-btn" onclick="selectSize(this,'مقاس ٣ (105–120 كيلو)')">
+            <span class="size-tag">مقاس ٣</span>
+            <span class="size-desc-txt">من 105 إلى 120 كيلو</span>
+          </button>
+        </div>
+        <p class="size-required-msg" id="size-required-msg">⚠️ يرجى اختيار المقاس أولاً</p>
+      </div>
+
+      <div>
+        <p class="detail-section-label">🎨 الألوان</p>
+        <div class="colors-note-detail">
+          كل الألوان متاحة 🌈<br>
+          للتأكيد من الألوان اسألينا على الإنستجرام
+          <a href="https://www.instagram.com/byaml_eg?hl=ar" target="_blank" style="color:var(--brown-mid);font-weight:700;text-decoration:none"> @byaml_eg</a>
+        </div>
+      </div>
+
+      <button class="detail-add-btn" id="detail-add-btn">
+        🛒 أضيفي للسلة
+      </button>
+    </div>
+  </div>
+  <footer><p>© 2025 AML Modest Clothes · جميع الحقوق محفوظة</p></footer>
+</div>
+
+<!-- CART -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <span class="cart-title">🛒 سلة المشتريات</span>
+    <button class="close-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"><p class="cart-empty">السلة فارغة</p></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total"><span>الإجمالي:</span><span id="cartTotal">0 جنيه</span></div>
+    <button class="checkout-btn" onclick="openCheckoutModal()">إتمام الطلب 🛍️</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL: 2 STEPS -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal-box">
+
+    <!-- STEP 1: SHIPPING FORM -->
+    <div id="step-shipping">
+      <p class="modal-title">📦 بيانات الشحن</p>
+      <p class="modal-sub">يرجى ملء البيانات لإتمام الطلب</p>
+      <div class="ship-form">
+        <div class="field-wrap">
+          <label class="field-label">الاسم ثلاثي <span class="req">*</span></label>
+          <input class="field-input" id="sh-name" type="text" placeholder="مثال: فاطمة محمد علي">
+          <p class="field-err" id="err-name">هذا الحقل مطلوب</p>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">رقم موبايل 1 <span class="req">*</span></label>
+          <input class="field-input" id="sh-phone1" type="tel" placeholder="01xxxxxxxxx">
+          <p class="field-err" id="err-phone1">أدخلي رقم موبايل صحيح</p>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">رقم موبايل 2 <span class="opt">(اختياري)</span></label>
+          <input class="field-input" id="sh-phone2" type="tel" placeholder="01xxxxxxxxx">
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">المحافظة <span class="req">*</span></label>
+          <select class="field-input field-select" id="sh-gov">
+            <option value="">اختاري المحافظة</option>
+            <option>القاهرة</option><option>الجيزة</option><option>الإسكندرية</option>
+            <option>الدقهلية</option><option>البحيرة</option><option>الفيوم</option>
+            <option>الغربية</option><option>الإسماعيلية</option><option>المنوفية</option>
+            <option>المنيا</option><option>القليوبية</option><option>الوادي الجديد</option>
+            <option>السويس</option><option>أسوان</option><option>أسيوط</option>
+            <option>بني سويف</option><option>بورسعيد</option><option>دمياط</option>
+            <option>جنوب سيناء</option><option>شمال سيناء</option><option>الشرقية</option>
+            <option>كفر الشيخ</option><option>مطروح</option><option>الأقصر</option>
+            <option>قنا</option><option>سوهاج</option><option>البحر الأحمر</option>
+          </select>
+          <p class="field-err" id="err-gov">يرجى اختيار المحافظة</p>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">العنوان بالتفصيل <span class="req">*</span></label>
+          <textarea class="field-input field-textarea" id="sh-address" placeholder="الشارع، المنطقة، رقم المبنى..."></textarea>
+          <p class="field-err" id="err-address">يرجى كتابة العنوان بالتفصيل</p>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">اللون المطلوب <span class="req">*</span></label>
+          <input class="field-input" id="sh-color" type="text" placeholder="مثال: أسود، بيج، كحلي...">
+          <p class="field-err" id="err-color">يرجى كتابة اللون المطلوب</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <button class="step-next-btn" onclick="goToStepPlatform()">التالي — اختاري طريقة الإرسال ←</button>
+      </div>
+      <button class="modal-cancel" onclick="closeCheckoutModal()">إلغاء</button>
+    </div>
+
+    <!-- STEP 2: PLATFORM CHOICE -->
+    <div id="step-platform" style="display:none">
+      <button class="back-step-btn" onclick="goToStepShipping()">→ رجوع</button>
+      <p class="modal-title">اختاري طريقة الطلب</p>
+      <p class="modal-sub">تواصلي معنا عبر الطريقة المفضلة لديكِ</p>
+      <div class="modal-btns">
+        <button class="modal-btn wa" onclick="checkoutVia('whatsapp')">
+          <img src="https://drive.google.com/thumbnail?id=1J-M5eYusdkO13sSjNn3l_cNwfzSMLOUF&sz=w60" alt="WhatsApp">
+          <div class="modal-btn-text">
+            <span class="modal-btn-label">طلب عبر واتساب</span>
+            <span class="modal-btn-desc">رسالة تلقائية بكل التفاصيل</span>
+          </div>
+        </button>
+        <button class="modal-btn ig" onclick="checkoutVia('instagram')">
+          <img src="https://drive.google.com/thumbnail?id=1TDVY3iGAIlqFErhMLyP5zKw4k94P54gx&sz=w60" alt="Instagram">
+          <div class="modal-btn-text">
+            <span class="modal-btn-label">طلب عبر إنستجرام</span>
+            <span class="modal-btn-desc">تواصلي معنا في الدايركت</span>
+          </div>
+        </button>
+      </div>
+      <button class="modal-cancel" onclick="closeCheckoutModal()">إلغاء</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PRODUCTS = {
+  winter: [
+    {id:'w1',name:'دريس شتوي مضلع', price:800,imgId:'1BxOx1WXD2XCl48aIsWG7SjUIFDlzrbWc',badge:'شتوي'},
+    {id:'w2',name:'دريس شتوي مضفر', price:850,imgId:'18uZv8R-CWFb7CZRCH1s5o1NSfJoTs_y5',badge:'شتوي'},
+    {id:'w3',name:'دريس شتوي رباط', price:950,imgId:'1ncpV11mmkb-CqI7-YasiVyN9FPLXKEKf',badge:'شتوي'},
+    {id:'w4',name:'سوت شتوي مضلع',  price:800,imgId:'1OTfxp3EPxrdF3AN1jB0e8J-Uvh-sepXx',badge:'شتوي'},
+    {id:'w5',name:'كوت جوخ',         price:950,imgId:'1am8tdNZFT8cfnMMgAUQ4uWHQW7BM3tIB',badge:'شتوي'},
+  ],
+  summer: [
+    {id:'s1',name:'الكاردي العباية',        price:800,imgId:'185ERyxzBeMAYR96yoQ_Ay8L1YPDuOSI-',badge:'صيفي'},
+    {id:'s2',name:'بليسية مضلع',            price:800,imgId:'1rZ0itEnXQfNG1thtEcz6OMHfoSr3UZzP',badge:'صيفي'},
+    {id:'s3',name:'دريس اوفر سايز صيفي',    price:750,imgId:'1sK-aceMfrSOA8begRPl2f6Ri4cQao9Eh',badge:'صيفي'},
+    {id:'s4',name:'دريس صيفي رباط',         price:750,imgId:'1K29kAQCUHogP0hayf4SX_5U2390Y1mDA',badge:'صيفي'},
+    {id:'s5',name:'سوت صيفي (شميز-اسكيرت)',price:800,imgId:'1rYtBKTeH2pSSDMbbQbDscQCmaNgQkd0P',badge:'صيفي'},
+    {id:'s6',name:'شميز دريس صيفي',         price:750,imgId:'1Qd6AxIXzylZCL7xvjtI3fEFRgv2yDISL',badge:'صيفي'},
+    {id:'s7',name:'شيرت دريس',              price:800,imgId:'1gzjSp3XtQ7Fd7rjSmIlFj_j1baEHTLC8',badge:'صيفي'},
+    {id:'s8',name:'لونج كيمونو',            price:750,imgId:'1fMlYWzxZAaafMKcDf5VlVXVGTKyIzQxW',badge:'صيفي'},
+    {id:'s9',name:'ميني كيمونو',            price:700,imgId:'1IwLTK9H4Kui8sHhkvvVpvx7vxx73_6H3',badge:'صيفي'},
+  ]
+};
+
+function imgSrc(id,sz='w600'){return`https://drive.google.com/thumbnail?id=${id}&sz=${sz}`}
+
+function renderCard(p){
+  return`<div class="product-card">
+    <div class="product-img-wrap">
+      <img src="${imgSrc(p.imgId)}" alt="${p.name}" loading="lazy" onerror="this.src='https://placehold.co/400x533/E8D5C0/5C3D2E?text=${encodeURIComponent(p.name)}'">
+      <span class="product-badge">${p.badge}</span>
+    </div>
+    <div class="product-info">
+      <p class="product-name">${p.name}</p>
+      <p class="product-price">${p.price} جنيه</p>
+      <button class="details-btn" onclick="openDetail('${p.id}')">
+        <span class="material-icons" style="font-size:1rem">info</span> تفاصيل أكثر
+      </button>
+    </div>
+  </div>`;
+}
+
+function renderGrids(){
+  document.getElementById('grid-winter').innerHTML=PRODUCTS.winter.map(renderCard).join('');
+  document.getElementById('grid-summer').innerHTML=PRODUCTS.summer.map(renderCard).join('');
+}
+renderGrids();
+
+/* ── PAGES ── */
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function goHome(){showPage('home');}
+
+let currentProduct = null;
+let selectedSize = '';
+
+function openDetail(pid){
+  const all=[...PRODUCTS.winter,...PRODUCTS.summer];
+  const p=all.find(x=>x.id===pid);
+  if(!p)return;
+  currentProduct=p;
+  selectedSize='';
+  document.getElementById('detail-img').src=imgSrc(p.imgId,'w800');
+  document.getElementById('detail-img').alt=p.name;
+  document.getElementById('detail-name').textContent=p.name;
+  document.getElementById('detail-price').textContent=p.price+' جنيه';
+  // reset size buttons
+  document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('size-required-msg').classList.remove('show');
+  // wire add btn
+  document.getElementById('detail-add-btn').onclick=handleAddToCart;
+  showPage('detail');
+}
+
+function selectSize(btn, label){
+  document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedSize=label;
+  document.getElementById('size-required-msg').classList.remove('show');
+}
+
+function handleAddToCart(){
+  if(!selectedSize){
+    document.getElementById('size-required-msg').classList.add('show');
+    document.getElementById('sizes-btns').scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  const p=currentProduct;
+  addToCart(p.name, p.price, imgSrc(p.imgId,'w100'), selectedSize);
+}
+
+/* ── TABS ── */
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ── CART ── */
+let cart=[];
+
+function addToCart(name,price,img,size){
+  const key=name+'||'+size;
+  const ex=cart.find(i=>i.key===key);
+  if(ex)ex.qty++;
+  else cart.push({key,name,price,img,size,qty:1});
+  renderCart();
+  showToast('✅ تمت الإضافة: '+name+' ('+size+')');
+}
+
+function removeItem(key){cart=cart.filter(i=>i.key!==key);renderCart();}
+
+function changeQty(key,delta){
+  const item=cart.find(i=>i.key===key);
+  if(!item)return;
+  item.qty+=delta;
+  if(item.qty<=0)removeItem(key);
+  else renderCart();
+}
+
+function renderCart(){
+  const container=document.getElementById('cartItems');
+  const footer=document.getElementById('cartFooter');
+  const countEl=document.getElementById('cartCount');
+  const totalEl=document.getElementById('cartTotal');
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const count=cart.reduce((s,i)=>s+i.qty,0);
+  countEl.textContent=count;
+  if(!cart.length){
+    container.innerHTML='<p class="cart-empty">🛒 السلة فارغة</p>';
+    footer.style.display='none';return;
+  }
+  footer.style.display='block';
+  totalEl.textContent=total+' جنيه';
+  container.innerHTML=cart.map(item=>`
+    <div class="cart-item">
+      <img src="${item.img}" alt="${item.name}" onerror="this.style.display='none'">
+      <div class="cart-item-info">
+        <p class="cart-item-name">${item.name}</p>
+        <p class="cart-item-size">📏 ${item.size}</p>
+        <p class="cart-item-price">${item.price*item.qty} جنيه</p>
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty('${item.key.replace(/'/g,"\\'")},-1)">−</button>
+          <span>${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty('${item.key.replace(/'/g,"\\'")}',1)">＋</button>
+        </div>
+      </div>
+      <button class="remove-item" onclick="removeItem('${item.key.replace(/'/g,"\\'")}')">🗑️</button>
+    </div>`).join('');
+}
+
+function openCart(){
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+function closeCart(){
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function openCheckoutModal(){
+  if(!cart.length)return;
+  goToStepShipping();
+  document.getElementById('checkoutModal').classList.add('open');
+}
+function closeCheckoutModal(){
+  document.getElementById('checkoutModal').classList.remove('open');
+}
+function goToStepShipping(){
+  document.getElementById('step-shipping').style.display='block';
+  document.getElementById('step-platform').style.display='none';
+}
+function goToStepPlatform(){
+  // validate
+  let valid=true;
+  const fields=[
+    {id:'sh-name',   err:'err-name',    check:v=>v.trim().split(/\s+/).length>=3},
+    {id:'sh-phone1', err:'err-phone1',  check:v=>/^01[0-2,5]{1}[0-9]{8}$/.test(v.trim())},
+    {id:'sh-gov',    err:'err-gov',     check:v=>v!==''},
+    {id:'sh-address',err:'err-address', check:v=>v.trim().length>=5},
+    {id:'sh-color',  err:'err-color',   check:v=>v.trim().length>=2},
+  ];
+  fields.forEach(f=>{
+    const el=document.getElementById(f.id);
+    const ok=f.check(el.value);
+    el.classList.toggle('error',!ok);
+    document.getElementById(f.err).classList.toggle('show',!ok);
+    if(!ok)valid=false;
+  });
+  if(!valid)return;
+  document.getElementById('step-shipping').style.display='none';
+  document.getElementById('step-platform').style.display='block';
+}
+
+function buildShippingText(){
+  const name    = document.getElementById('sh-name').value.trim();
+  const phone1  = document.getElementById('sh-phone1').value.trim();
+  const phone2  = document.getElementById('sh-phone2').value.trim();
+  const gov     = document.getElementById('sh-gov').value;
+  const address = document.getElementById('sh-address').value.trim();
+  const color   = document.getElementById('sh-color').value.trim();
+  return `📦 بيانات الشحن:\n` +
+    `• الاسم: ${name}\n` +
+    `• موبايل 1: ${phone1}\n` +
+    (phone2 ? `• موبايل 2: ${phone2}\n` : '') +
+    `• المحافظة: ${gov}\n` +
+    `• العنوان: ${address}\n` +
+    `• اللون: ${color}`;
+}
+
+function checkoutVia(platform){
+  if(!cart.length)return;
+  const lines=cart.map(i=>`• ${i.name}\n  المقاس: ${i.size}\n  الكمية: ${i.qty} × ${i.price} = ${i.price*i.qty} جنيه`).join('\n\n');
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const shipping=buildShippingText();
+  const orderText=`أهلاً AML Modest Clothes 🌸\nأريد طلب:\n\n${lines}\n\nالإجمالي: ${total} جنيه\n\n${shipping}`;
+  closeCheckoutModal();
+  if(platform==='whatsapp'){
+    window.open(`https://wa.me/201211523707?text=${encodeURIComponent(orderText)}`,'_blank');
+  } else {
+    window.open(`https://www.instagram.com/byaml_eg`,'_blank');
+  }
+}
+
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2400);
+}
+</script>
+</body>
+</html>
