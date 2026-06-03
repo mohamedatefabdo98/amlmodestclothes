@@ -588,28 +588,33 @@ footer{
   .nav-wish{padding:7px 12px;font-size:.82rem}
   .nav-cart{padding:7px 12px;font-size:.82rem}
 
-  /* HERO — same side by side on mobile, just smaller */
+  /* HERO — same as desktop, scaled for mobile */
   .hero{
     grid-template-columns:2fr 3fr;
-    height:auto;min-height:auto;max-height:none;
     padding-top:60px;
+    height:auto;
   }
   .hero-img-col{
-    height:auto;min-height:260px;max-height:none;
-    width:100%;
+    min-height:52vw;
+    height:52vw;
+    max-height:none;
   }
   .hero-img-col img{
-    min-height:260px;
-    object-position:center top;
+    min-height:0;
+    height:100%;
+    width:100%;
+    object-fit:cover;
+    object-position:50% 20%;
   }
   .hero-content{
-    padding:20px 16px 20px 12px;
+    padding:16px 18px 16px 10px;
+    justify-content:center;
     align-items:flex-start;
   }
-  .hero-title{text-align:right;font-size:1.1rem;margin-bottom:8px;line-height:1.4}
-  .hero-sub{text-align:right;font-size:.78rem;margin-bottom:14px;line-height:1.6}
-  .hero-cta{justify-content:flex-start;gap:6px;flex-direction:column;align-items:flex-start}
-  .btn-primary,.btn-outline{padding:9px 16px;font-size:.8rem;width:100%}
+  .hero-title{text-align:right;font-size:clamp(.9rem,3.5vw,1.2rem);margin-bottom:6px;line-height:1.4}
+  .hero-sub{text-align:right;font-size:clamp(.7rem,2.5vw,.82rem);margin-bottom:12px;line-height:1.55}
+  .hero-cta{flex-direction:column;gap:6px;align-items:stretch;width:100%}
+  .btn-primary,.btn-outline{padding:8px 12px;font-size:clamp(.72rem,2.5vw,.82rem);text-align:center;border-radius:30px;width:100%}
 
   /* FEATURED */
   .featured-section{padding:40px 14px 24px}
