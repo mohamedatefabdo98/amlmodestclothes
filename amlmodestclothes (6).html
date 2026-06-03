@@ -34,6 +34,7 @@ nav{
   display:flex;align-items:center;gap:10px;text-decoration:none;
 }
 .nav-logo span{color:var(--gold)}
+.nav-logo-text{display:flex;align-items:center;gap:4px}
 .nav-links{display:flex;align-items:center;gap:8px}
 .nav-link{
   background:none;border:none;font-family:'Tajawal',sans-serif;font-size:.9rem;
@@ -85,8 +86,9 @@ nav{
   background:var(--gold);color:white;
   width:18px;height:18px;border-radius:50%;
   font-size:.65rem;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
+  display:none;align-items:center;justify-content:center;
 }
+.cart-badge.show{display:flex}
 
 /* SEARCH BAR */
 .nav-search{
@@ -693,16 +695,55 @@ footer{
 /* RESPONSIVE */
 @media(max-width:700px){
   /* NAV */
-  nav{padding:0 14px;height:60px}
-  .nav-logo{font-size:1.1rem}
-  .nav-logo img{height:30px}
+  nav{
+    padding:0 10px;height:60px;
+    gap:6px;
+  }
+  .nav-logo{font-size:.95rem;gap:5px;flex-shrink:0}
+  .nav-logo img{height:26px}
+  .nav-logo-text{display:none}
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:2px;
+    flex-shrink:0;
+  }
   .nav-links .nav-link:not(.nav-cart):not(.nav-wish){display:none}
-  .nav-search{display:none}
-  .nav-hamburger{display:flex}
-  .nav-wish{padding:7px 10px;font-size:.82rem}
-  .nav-cart{padding:7px 12px;font-size:.82rem}
+  .nav-search{
+    display:flex;
+    flex:1 1 auto;
+    min-width:0;
+    height:34px;
+    padding:0 10px;
+  }
+  .nav-search input{font-size:.8rem}
+  .nav-wish{
+    padding:0;
+    background:none;
+    color:var(--espresso);
+    font-size:1.2rem;
+    width:32px;height:32px;
+    border-radius:50%;
+    flex-shrink:0;
+  }
+  .nav-wish:hover{background:var(--sand)}
+  .nav-cart{
+    padding:0;
+    background:none;
+    color:var(--espresso);
+    font-size:1.2rem;
+    width:32px;height:32px;
+    border-radius:50%;
+    box-shadow:none;
+    flex-shrink:0;
+  }
+  .nav-cart:hover{background:var(--sand)}
   .nav-wish .wish-label{display:none}
   .nav-cart .cart-label{display:none}
+  .nav-hamburger{
+    display:flex;
+    flex-shrink:0;
+  }
   .search-dropdown{top:60px}
 
   /* HERO mobile */
@@ -795,7 +836,7 @@ footer{
 <nav id="navbar">
   <a class="nav-logo" onclick="goHome()" style="cursor:pointer">
     <img src="https://drive.google.com/thumbnail?id=1NK3poi7l0jqFSfhk8sig490geYi3ak5J&sz=w60" alt="AML" style="height:36px;width:auto" onerror="this.style.display='none'">
-    AML <span>Modest</span>
+    <span class="nav-logo-text">AML <span>Modest</span></span>
   </a>
   <div class="nav-search">
     <span class="nav-search-icon"><i class="ti ti-search" aria-hidden="true"></i></span>
@@ -813,7 +854,7 @@ footer{
       <i class="ti ti-shopping-bag" aria-hidden="true"></i> <span class="cart-label">السلة</span> <span class="cart-badge" id="cartCount">0</span>
     </button>
   </div>
-  <button class="nav-hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="القائمة">
+  <button class="nav-hamburger" id="hamburgerBtn" onclick="toggleMobileMenu(event)" aria-label="القائمة">
     <i class="ti ti-menu-2" aria-hidden="true"></i>
   </button>
 </nav>
@@ -1313,6 +1354,7 @@ function renderCart(){
   let total=cart.reduce((s,i)=>s+i.price*i.qty,0);
   let count=cart.reduce((s,i)=>s+i.qty,0);
   cnt.textContent=count;
+  cnt.classList.toggle('show', count>0);
   let mcnt=document.getElementById('cartCountMobile');
   if(mcnt)mcnt.textContent=count;
   if(!cart.length){wrap.innerHTML='<p class="cart-empty-msg">السلة فارغة</p>';foot.style.display='none';return;}
@@ -1449,7 +1491,8 @@ window.addEventListener('scroll',()=>{
 });
 
 /* MOBILE MENU */
-function toggleMobileMenu(){
+function toggleMobileMenu(e){
+  if(e){e.stopPropagation();}
   let m=document.getElementById('mobileMenu');
   let btn=document.getElementById('hamburgerBtn');
   let isOpen=m.classList.toggle('open');
