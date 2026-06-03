@@ -55,53 +55,131 @@ nav{
   display:flex;align-items:center;justify-content:center;
 }
 
+/* SEARCH BAR */
+.nav-search{
+  display:flex;align-items:center;
+  background:var(--sand);
+  border:1.5px solid transparent;
+  border-radius:30px;
+  padding:0 16px;
+  height:38px;
+  gap:8px;
+  transition:all .25s;
+  flex:0 0 220px;
+}
+.nav-search:focus-within{
+  border-color:var(--latte);
+  background:white;
+  box-shadow:0 2px 12px rgba(44,26,14,.08);
+}
+.nav-search input{
+  border:none;background:transparent;
+  font-family:'Tajawal',sans-serif;font-size:.88rem;
+  color:var(--text);outline:none;width:100%;
+  direction:rtl;
+}
+.nav-search input::placeholder{color:var(--muted)}
+.nav-search-icon{color:var(--muted);font-size:1rem;flex-shrink:0;cursor:pointer;transition:color .2s}
+.nav-search:focus-within .nav-search-icon{color:var(--latte)}
+.nav-search-clear{
+  background:none;border:none;cursor:pointer;
+  color:var(--muted);font-size:.85rem;padding:0;
+  display:none;flex-shrink:0;
+}
+.nav-search-clear.show{display:block}
+
+/* SEARCH RESULTS DROPDOWN */
+.search-dropdown{
+  position:fixed;
+  top:70px;left:50%;
+  transform:translateX(-50%);
+  width:min(480px,90vw);
+  background:white;
+  border-radius:18px;
+  box-shadow:0 8px 32px rgba(44,26,14,.15);
+  z-index:999;
+  overflow:hidden;
+  display:none;
+  border:1px solid var(--sand2);
+}
+.search-dropdown.show{display:block;animation:fadeUp .2s ease}
+.search-results-list{max-height:360px;overflow-y:auto}
+.search-result-item{
+  display:flex;align-items:center;gap:14px;
+  padding:12px 18px;cursor:pointer;
+  transition:background .2s;border-bottom:1px solid var(--sand);
+}
+.search-result-item:last-child{border-bottom:none}
+.search-result-item:hover{background:var(--sand)}
+.search-result-img{
+  width:48px;height:64px;object-fit:cover;
+  border-radius:8px;flex-shrink:0;
+  background:var(--sand2);
+}
+.search-result-name{font-weight:600;font-size:.9rem;color:var(--espresso);margin-bottom:3px}
+.search-result-price{font-size:.82rem;color:var(--latte);font-weight:700}
+.search-result-badge{font-size:.72rem;color:var(--muted)}
+.search-no-results{
+  padding:28px;text-align:center;
+  color:var(--muted);font-size:.9rem;
+}
+.search-backdrop{
+  position:fixed;inset:0;z-index:998;
+  display:none;
+}
+.search-backdrop.show{display:block}
+
 /* HERO */
 .hero{
   padding-top:70px;
   display:grid;
   grid-template-columns:2fr 3fr;
-  align-items:stretch;
+  min-height:480px;
   position:relative;
   overflow:hidden;
   background:var(--sand);
 }
 .hero-overlay{display:none}
 .hero-img-col{
-  position:relative;overflow:hidden;
-  min-height:420px;
+  overflow:hidden;
 }
 .hero-img-col img{
-  width:100%;height:100%;
-  object-fit:cover;object-position:center top;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 15%;
   display:block;
-  min-height:420px;
 }
 .hero-content{
   padding:44px 52px 44px 28px;
-  display:flex;flex-direction:column;
+  display:flex;
+  flex-direction:column;
   align-items:flex-start;
   justify-content:center;
-  position:relative;z-index:2;
 }
 .hero-label{display:none}
 .hero-title{
   font-family:'El Messiri',sans-serif;
   font-size:clamp(1.6rem,3vw,2.7rem);
-  color:var(--espresso);line-height:1.35;
+  color:var(--espresso);
+  line-height:1.35;
   margin:0 0 14px;
   animation:fadeUp .9s ease .1s both;
   text-align:right;
 }
 .hero-title em{font-style:normal;color:var(--gold)}
 .hero-sub{
-  color:var(--muted);font-size:.92rem;
-  margin:0 0 26px;line-height:1.75;
+  color:var(--muted);
+  font-size:.92rem;
+  margin:0 0 26px;
+  line-height:1.75;
   animation:fadeUp 1s ease .2s both;
-  font-weight:400;
   text-align:right;
 }
 .hero-cta{
-  display:flex;gap:10px;flex-wrap:wrap;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
   animation:fadeUp 1s ease .3s both;
 }
 .btn-primary{
@@ -587,40 +665,23 @@ footer{
   nav .nav-link:not(.nav-cart):not(.nav-wish){display:none}
   .nav-wish{padding:7px 12px;font-size:.82rem}
   .nav-cart{padding:7px 12px;font-size:.82rem}
+  .nav-search{flex:0 0 130px;height:34px;padding:0 10px}
+  .nav-search input{font-size:.82rem}
+  .search-dropdown{top:60px}
 
-  /* HERO — force side by side on mobile */
+  /* HERO mobile */
   .hero{
-    display:flex !important;
-    flex-direction:row !important;
+    grid-template-columns:4fr 5fr;
+    min-height:180px;
     padding-top:60px;
-    min-height:200px;
-    height:auto;
-  }
-  .hero-img-col{
-    flex:0 0 40%;
-    width:40%;
-    height:auto;
-    min-height:220px;
-    max-height:none;
-    align-self:stretch;
-  }
-  .hero-img-col img{
-    min-height:0;
-    height:100%;
-    width:100%;
-    object-fit:cover;
-    object-position:center 15%;
   }
   .hero-content{
-    flex:1;
     padding:14px 16px 14px 8px;
-    justify-content:center;
-    align-items:flex-start;
   }
-  .hero-title{text-align:right;font-size:clamp(.85rem,3.8vw,1.1rem);margin-bottom:6px;line-height:1.45}
-  .hero-sub{text-align:right;font-size:clamp(.68rem,2.4vw,.8rem);margin-bottom:12px;line-height:1.55}
-  .hero-cta{flex-direction:column;gap:6px;align-items:stretch;width:100%}
-  .btn-primary,.btn-outline{padding:8px 10px;font-size:clamp(.7rem,2.4vw,.8rem);text-align:center;border-radius:30px;width:100%}
+  .hero-title{font-size:1rem;margin-bottom:6px}
+  .hero-sub{font-size:.75rem;margin-bottom:10px}
+  .hero-cta{flex-direction:column;gap:6px}
+  .btn-primary,.btn-outline{padding:8px 12px;font-size:.78rem;width:100%;text-align:center}
 
   /* FEATURED */
   .featured-section{padding:40px 14px 24px}
@@ -671,6 +732,26 @@ footer{
 /* PAGE SYSTEM */
 .page{display:none}
 .page.active{display:block;animation:fadeUp .35s ease}
+
+/* SCROLL TO TOP */
+.scroll-top{
+  position:fixed;
+  bottom:28px;left:24px;
+  width:44px;height:44px;
+  background:var(--espresso);
+  color:white;border:none;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;
+  z-index:1100;
+  box-shadow:0 4px 16px rgba(44,26,14,.25);
+  opacity:0;pointer-events:none;
+  transform:translateY(12px);
+  transition:opacity .3s, transform .3s, background .2s;
+}
+.scroll-top.show{opacity:1;pointer-events:all;transform:translateY(0)}
+.scroll-top:hover{background:var(--coffee)}
 </style>
 </head>
 <body>
@@ -680,6 +761,11 @@ footer{
     <img src="https://drive.google.com/thumbnail?id=1NK3poi7l0jqFSfhk8sig490geYi3ak5J&sz=w60" alt="AML" style="height:36px;width:auto" onerror="this.style.display='none'">
     AML <span>Modest</span>
   </a>
+  <div class="nav-search">
+    <span class="nav-search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="ابحثي عن منتج..." oninput="handleSearch(this.value)" onfocus="showDropdown()" autocomplete="off">
+    <button class="nav-search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+  </div>
   <div class="nav-links">
     <button class="nav-link" onclick="goHome()">المتجر</button>
     <button class="nav-link" onclick="showAbout()">من نحن</button>
@@ -693,14 +779,18 @@ footer{
   </div>
 </nav>
 
+<!-- SEARCH DROPDOWN -->
+<div class="search-backdrop" id="searchBackdrop" onclick="closeSearch()"></div>
+<div class="search-dropdown" id="searchDropdown">
+  <div class="search-results-list" id="searchResults"></div>
+</div>
+
 <!-- HOME PAGE -->
 <div class="page active" id="page-home">
   <section class="hero">
-    <!-- Image column (left in RTL = left side visually) -->
     <div class="hero-img-col">
       <img src="https://drive.google.com/thumbnail?id=1VWVhwl0YT7M7yd7K0vN0_SryXnsCldYG&sz=w800" alt="AML Modest Clothes" onerror="this.style.background='var(--sand2)'">
     </div>
-    <!-- Text column -->
     <div class="hero-content">
       <h1 class="hero-title">نصنع لكِ <em>أناقة</em> واسعة<br>تشبه هدوء روحك</h1>
       <p class="hero-sub">قطع فنية بأعلى درجات الدقة، لكل محجبة تستحق الأفضل</p>
@@ -962,6 +1052,9 @@ footer{
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="العودة للأعلى">↑</button>
 
 <script>
 const PRODUCTS={winter:[
@@ -1240,6 +1333,51 @@ function showToast(msg){
   let t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
   clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2400);
 }
+
+/* ---- SEARCH ---- */
+function handleSearch(val){
+  let clear=document.getElementById('searchClear');
+  clear.classList.toggle('show', val.length>0);
+  if(val.trim().length===0){closeSearch();return;}
+  showDropdown();
+  let all=[...PRODUCTS.winter,...PRODUCTS.summer];
+  let q=val.trim().toLowerCase();
+  let results=all.filter(p=>p.name.toLowerCase().includes(q)||p.badge.includes(q));
+  let list=document.getElementById('searchResults');
+  if(!results.length){
+    list.innerHTML='<div class="search-no-results">لا توجد نتائج لـ "'+val+'"</div>';
+  } else {
+    list.innerHTML=results.map(p=>`
+      <div class="search-result-item" onclick="openDetail('${p.id}');closeSearch()">
+        <img class="search-result-img" src="${img(p.imgId,'w120')}" alt="${p.name}" onerror="this.style.background='var(--sand2)'">
+        <div>
+          <p class="search-result-name">${p.name}</p>
+          <p class="search-result-price">${p.price} جنيه</p>
+          <p class="search-result-badge">${p.badge}</p>
+        </div>
+      </div>`).join('');
+  }
+}
+function showDropdown(){
+  let val=document.getElementById('searchInput').value.trim();
+  if(!val)return;
+  document.getElementById('searchDropdown').classList.add('show');
+  document.getElementById('searchBackdrop').classList.add('show');
+}
+function closeSearch(){
+  document.getElementById('searchDropdown').classList.remove('show');
+  document.getElementById('searchBackdrop').classList.remove('show');
+}
+function clearSearch(){
+  document.getElementById('searchInput').value='';
+  document.getElementById('searchClear').classList.remove('show');
+  closeSearch();
+}
+
+/* SCROLL TO TOP */
+window.addEventListener('scroll',()=>{
+  document.getElementById('scrollTopBtn').classList.toggle('show', window.scrollY > 300);
+});
 </script>
 </body>
 </html>
