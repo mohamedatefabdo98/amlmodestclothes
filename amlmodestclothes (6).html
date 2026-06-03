@@ -732,6 +732,26 @@ footer{
 /* PAGE SYSTEM */
 .page{display:none}
 .page.active{display:block;animation:fadeUp .35s ease}
+
+/* SCROLL TO TOP */
+.scroll-top{
+  position:fixed;
+  bottom:28px;left:24px;
+  width:44px;height:44px;
+  background:var(--espresso);
+  color:white;border:none;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;
+  z-index:1100;
+  box-shadow:0 4px 16px rgba(44,26,14,.25);
+  opacity:0;pointer-events:none;
+  transform:translateY(12px);
+  transition:opacity .3s, transform .3s, background .2s;
+}
+.scroll-top.show{opacity:1;pointer-events:all;transform:translateY(0)}
+.scroll-top:hover{background:var(--coffee)}
 </style>
 </head>
 <body>
@@ -1032,6 +1052,9 @@ footer{
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="العودة للأعلى">↑</button>
 
 <script>
 const PRODUCTS={winter:[
@@ -1350,6 +1373,11 @@ function clearSearch(){
   document.getElementById('searchClear').classList.remove('show');
   closeSearch();
 }
+
+/* SCROLL TO TOP */
+window.addEventListener('scroll',()=>{
+  document.getElementById('scrollTopBtn').classList.toggle('show', window.scrollY > 300);
+});
 </script>
 </body>
 </html>
