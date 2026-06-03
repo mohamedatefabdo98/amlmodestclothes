@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -270,8 +271,9 @@ nav{
 }
 .wishlist-btn:hover{background:white;transform:scale(1.12)}
 .wishlist-btn.saved{background:#fff0f0;color:#e74c3c}
-.wishlist-btn.saved::after{content:'❤️'}
-.wishlist-btn:not(.saved)::after{content:'🤍'}
+.wishlist-btn.saved::after{content:''}
+.wishlist-btn:not(.saved)::after{content:''}
+.wishlist-btn i{font-size:1.1rem;pointer-events:none}
 .card-body{padding:16px}
 .card-name{
   font-family:'El Messiri',sans-serif;font-size:1rem;
@@ -294,7 +296,7 @@ nav{
   display:flex;justify-content:center;flex-wrap:wrap;gap:40px;
 }
 .feature-item{text-align:center;max-width:200px}
-.feature-icon{font-size:1.8rem;margin-bottom:12px}
+.feature-icon{font-size:2rem;margin-bottom:12px;color:var(--coffee);display:flex;justify-content:center;align-items:center}
 .feature-name{
   font-family:'El Messiri',sans-serif;color:var(--espresso);
   font-size:1rem;margin-bottom:6px;font-weight:600;
@@ -762,7 +764,7 @@ footer{
     AML <span>Modest</span>
   </a>
   <div class="nav-search">
-    <span class="nav-search-icon">🔍</span>
+    <span class="nav-search-icon"><i class="ti ti-search" aria-hidden="true"></i></span>
     <input type="text" id="searchInput" placeholder="ابحثي عن منتج..." oninput="handleSearch(this.value)" onfocus="showDropdown()" autocomplete="off">
     <button class="nav-search-clear" id="searchClear" onclick="clearSearch()">✕</button>
   </div>
@@ -771,11 +773,11 @@ footer{
     <button class="nav-link" onclick="showAbout()">من نحن</button>
     <button class="nav-link" onclick="goHome();setTimeout(()=>document.getElementById('social').scrollIntoView({behavior:'smooth'}),120)">تواصلي معنا</button>
     <button class="nav-wish" onclick="openWishlist()">
-      ♡ المفضلة <span class="wish-badge" id="wishCount">0</span>
+      <i class="ti ti-heart" aria-hidden="true"></i> المفضلة <span class="wish-badge" id="wishCount">0</span>
     </button>
-    <button class="nav-cart nav-link" onclick="openCart()">
-      🛒 السلة <span class="cart-badge" id="cartCount">0</span>
-    </button>
+      <button class="nav-cart nav-link" onclick="openCart()">
+        <i class="ti ti-shopping-bag" aria-hidden="true"></i> السلة <span class="cart-badge" id="cartCount">0</span>
+      </button>
   </div>
 </nav>
 
@@ -859,8 +861,8 @@ footer{
     </div>
     <div class="tabs-wrap">
       <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('winter',this)">❄️ الشتوي</button>
-        <button class="tab-btn" onclick="switchTab('summer',this)">☀️ الصيفي</button>
+        <button class="tab-btn active" onclick="switchTab('winter',this)"><i class="ti ti-snowflake" aria-hidden="true"></i> الشتوي</button>
+        <button class="tab-btn" onclick="switchTab('summer',this)"><i class="ti ti-sun" aria-hidden="true"></i> الصيفي</button>
       </div>
     </div>
     <div class="tab-panel active" id="tab-winter">
@@ -872,10 +874,10 @@ footer{
   </section>
 
   <div class="features-strip">
-    <div class="feature-item"><div class="feature-icon">🚚</div><div class="feature-name">شحن لكل مصر</div><div class="feature-desc">توصيل سريع لجميع المحافظات</div></div>
-    <div class="feature-item"><div class="feature-icon">🎨</div><div class="feature-name">كل الألوان</div><div class="feature-desc">تواصلي معنا لاختيار لونك</div></div>
-    <div class="feature-item"><div class="feature-icon">📏</div><div class="feature-name">مقاسات شاملة</div><div class="feature-desc">من 50 إلى 120 كيلو</div></div>
-    <div class="feature-item"><div class="feature-icon">💎</div><div class="feature-name">جودة استثنائية</div><div class="feature-desc">خيط وتفصيلة بعناية</div></div>
+    <div class="feature-item"><div class="feature-icon"><i class="ti ti-truck-delivery" style="font-size:2rem" aria-hidden="true"></i></div><div class="feature-name">شحن لكل مصر</div><div class="feature-desc">توصيل سريع لجميع المحافظات</div></div>
+    <div class="feature-item"><div class="feature-icon"><i class="ti ti-palette" style="font-size:2rem" aria-hidden="true"></i></div><div class="feature-name">كل الألوان</div><div class="feature-desc">تواصلي معنا لاختيار لونك</div></div>
+    <div class="feature-item"><div class="feature-icon"><i class="ti ti-ruler-measure" style="font-size:2rem" aria-hidden="true"></i></div><div class="feature-name">مقاسات شاملة</div><div class="feature-desc">من 50 إلى 120 كيلو</div></div>
+    <div class="feature-item"><div class="feature-icon"><i class="ti ti-award" style="font-size:2rem" aria-hidden="true"></i></div><div class="feature-name">جودة استثنائية</div><div class="feature-desc">خيط وتفصيلة بعناية</div></div>
   </div>
 
   <section id="social" class="social-section">
@@ -926,7 +928,7 @@ footer{
       <div>
         <h1 class="detail-name" id="d-name"></h1>
         <p class="detail-price" id="d-price"></p>
-        <p class="detail-label">📏 اختاري مقاسك</p>
+        <p class="detail-label"><i class="ti ti-ruler-measure" aria-hidden="true"></i> اختاري مقاسك</p>
         <div class="sizes-row" id="sizes-row">
           <button class="size-btn" onclick="selectSize(this,'مقاس 1 (50-85 كيلو)')">
             <span class="size-tag">مقاس 1</span><span class="size-desc">من 50 إلى 85 كيلو</span>
@@ -939,12 +941,12 @@ footer{
           </button>
         </div>
         <p class="size-req" id="size-req">يرجى اختيار المقاس أولاً</p>
-        <p class="detail-label">🎨 الألوان</p>
+        <p class="detail-label"><i class="ti ti-palette" aria-hidden="true"></i> الألوان</p>
         <div class="colors-note">
           كل الألوان متاحة · للتأكيد من الألوان تواصلي معنا على
           <a href="https://www.instagram.com/byaml_eg?hl=ar" target="_blank">@byaml_eg</a>
         </div>
-        <button class="add-btn" onclick="handleAdd()">🛒 أضيفي للسلة</button>
+        <button class="add-btn" onclick="handleAdd()"><i class="ti ti-shopping-bag" aria-hidden="true"></i> أضيفي للسلة</button>
       </div>
     </div>
     <footer style="margin-top:40px"><p>AML Modest Clothes — جميع الحقوق محفوظة 2025</p></footer>
@@ -954,7 +956,7 @@ footer{
 <!-- WISHLIST DRAWER -->
 <div class="wish-drawer" id="wishDrawer">
   <div class="wish-head">
-    <span class="wish-head-title">❤️ المفضلة</span>
+    <span class="wish-head-title"><i class="ti ti-heart" aria-hidden="true"></i> المفضلة</span>
     <button class="close-x" onclick="closeWishlist()">✕</button>
   </div>
   <div class="wish-items-wrap" id="wishItems"></div>
@@ -964,7 +966,7 @@ footer{
 <div class="backdrop" id="backdrop" onclick="closeCart();closeWishlist()"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-head">
-    <span class="cart-head-title">🛒 سلة المشتريات</span>
+    <span class="cart-head-title"><i class="ti ti-shopping-bag" aria-hidden="true"></i> سلة المشتريات</span>
     <button class="close-x" onclick="closeCart()">✕</button>
   </div>
   <div class="cart-items-wrap" id="cartItems"></div>
@@ -1032,7 +1034,7 @@ footer{
 <!-- WA SUCCESS -->
 <div class="success-screen" id="successWa">
   <div class="success-card">
-    <h2>سيتم تحويلك للواتساب لتأكيد طلبك! شكراً لاختياركِ أمل 📦🥰</h2>
+    <h2>سيتم تحويلك للواتساب لتأكيد طلبك! شكراً لاختياركِ أمل</h2>
     <div class="success-prog"><div class="success-fill"></div></div>
   </div>
 </div>
@@ -1042,7 +1044,7 @@ footer{
   <div class="modal-box ig-confirm">
     <div style="font-size:2rem;margin-bottom:10px">📋</div>
     <p style="font-family:'El Messiri',sans-serif;font-size:1.15rem;color:var(--espresso);margin-bottom:6px">تم نسخ طلبك تلقائياً!</p>
-    <p style="color:var(--muted);font-size:.87rem;line-height:1.6;margin-bottom:20px">ابعتيلنا الطلب عبر رسائل الانستجرام وسنتواصل معكِ فوراً 📦🥰</p>
+    <p style="color:var(--muted);font-size:.87rem;line-height:1.6;margin-bottom:20px">ابعتيلنا الطلب عبر رسائل الانستجرام وسنتواصل معكِ فوراً</p>
     <a class="ig-go-btn" href="https://www.instagram.com/byaml_eg" target="_blank" onclick="document.getElementById('successIg').classList.remove('open')">
       <img src="https://drive.google.com/thumbnail?id=1TDVY3iGAIlqFErhMLyP5zKw4k94P54gx&sz=w60" alt="">
       افتحي الرسائل وابعتيلنا الطلب
@@ -1054,7 +1056,7 @@ footer{
 <div class="toast" id="toast"></div>
 
 <!-- SCROLL TO TOP -->
-<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="العودة للأعلى">↑</button>
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="العودة للأعلى"><i class="ti ti-arrow-up" aria-hidden="true"></i></button>
 
 <script>
 const PRODUCTS={winter:[
@@ -1082,7 +1084,7 @@ function card(p){
     <div class="card-img-wrap">
       <img src="${img(p.imgId)}" alt="${p.name}" loading="lazy" onerror="this.src='https://placehold.co/400x533/EFE4D0/2C1A0E?text=${encodeURIComponent(p.name)}'">
       <span class="card-badge">${p.badge}</span>
-      <button class="wishlist-btn" onclick="toggleWish(event,'${p.id}')" title="أضيفي للمفضلة"></button>
+      <button class="wishlist-btn" onclick="toggleWish(event,'${p.id}')" title="أضيفي للمفضلة"><i class="ti ti-heart"></i></button>
     </div>
     <div class="card-body">
       <p class="card-name">${p.name}</p>
@@ -1129,7 +1131,7 @@ function toggleWish(e,pid){
   } else {
     wishlist.push(p);
     btn.classList.add('saved');
-    showToast('❤️ تمت الإضافة للمفضلة');
+    showToast('تمت الإضافة للمفضلة');
   }
   renderWishlist();
 }
@@ -1139,7 +1141,7 @@ function renderWishlist(){
   let badge=document.getElementById('wishCount');
   badge.textContent=wishlist.length;
   badge.classList.toggle('show',wishlist.length>0);
-  if(!wishlist.length){wrap.innerHTML='<p class="wish-empty-msg">المفضلة فارغة 🤍</p>';return;}
+  if(!wishlist.length){wrap.innerHTML='<p class="wish-empty-msg">المفضلة فارغة</p>';return;}
   wrap.innerHTML=wishlist.map(p=>{
     return`<div class="wish-item">
       <img src="${img(p.imgId,'w120')}" alt="${p.name}" onerror="this.style.display='none'">
@@ -1246,7 +1248,7 @@ function renderCart(){
   let total=cart.reduce((s,i)=>s+i.price*i.qty,0);
   let count=cart.reduce((s,i)=>s+i.qty,0);
   cnt.textContent=count;
-  if(!cart.length){wrap.innerHTML='<p class="cart-empty-msg">السلة فارغة 🛍️</p>';foot.style.display='none';return;}
+  if(!cart.length){wrap.innerHTML='<p class="cart-empty-msg">السلة فارغة</p>';foot.style.display='none';return;}
   foot.style.display='block';tot.textContent=total+' جنيه';
   wrap.innerHTML=cart.map(it=>{
     let k=it.key.replace(/'/g,"\\'");
