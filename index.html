@@ -597,6 +597,22 @@ footer{
 .platform-btn-label{font-size:1rem;font-weight:700}
 .platform-btn-desc{font-size:.7rem;opacity:.88;font-weight:400}
 
+/* PAYMENT METHOD STEP */
+.pay-option{
+  display:flex;align-items:center;gap:14px;
+  padding:15px 18px;border-radius:16px;margin-bottom:12px;
+  border:2px solid var(--sand2);background:white;
+  cursor:pointer;transition:all .25s;width:100%;text-align:right;
+  font-family:'Tajawal',sans-serif;
+}
+.pay-option:hover{border-color:var(--latte);background:var(--sand)}
+.pay-option.selected{border-color:var(--espresso);background:var(--sand)}
+.pay-option-icon{font-size:1.8rem;flex-shrink:0;width:40px;text-align:center}
+.pay-option-label{font-size:1rem;font-weight:700;color:var(--espresso)}
+.pay-option-desc{font-size:.75rem;color:var(--muted);font-weight:400}
+.pay-err{color:#c0392b;font-size:.8rem;display:none;margin-bottom:10px;text-align:center}
+.pay-err.show{display:block}
+
 /* SUCCESS */
 .success-screen{
   position:fixed;inset:0;background:rgba(44,26,14,.88);
@@ -618,6 +634,24 @@ footer{
 
 /* SIZE WARN */
 .size-warn-box{max-width:320px;padding:34px 24px}
+
+/* COPY PAY TOAST */
+.copy-pay-toast{
+  position:fixed;bottom:32px;left:50%;
+  transform:translateX(-50%) translateY(120px);
+  background:var(--espresso);color:white;
+  padding:16px 22px;border-radius:18px;
+  z-index:2100;
+  display:flex;align-items:flex-start;gap:14px;
+  max-width:min(360px,88vw);
+  box-shadow:0 8px 32px rgba(44,26,14,.35);
+  transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s;
+  opacity:0;pointer-events:none;
+}
+.copy-pay-toast.show{transform:translateX(-50%) translateY(0);opacity:1;pointer-events:all}
+.copy-pay-icon{font-size:1.6rem;flex-shrink:0;margin-top:2px}
+.copy-pay-title{font-weight:700;font-size:.95rem;margin-bottom:5px;line-height:1.4}
+.copy-pay-sub{font-size:.8rem;color:rgba(255,255,255,.72);line-height:1.5}
 
 /* TOAST */
 .toast{
@@ -1106,11 +1140,45 @@ footer{
       </div>
       <div class="field-group"><label class="field-label">العنوان <span class="req">*</span></label><textarea class="field-input field-textarea" id="sh-address" placeholder="الشارع، المنطقة، رقم المبنى..."></textarea><p class="field-err" id="err-address">يرجى كتابة العنوان</p></div>
       <div class="field-group"><label class="field-label">اللون المطلوب <span class="req">*</span></label><input class="field-input" id="sh-color" type="text" placeholder="اسود، بيج، كحلي..."><p class="field-err" id="err-color">يرجى كتابة اللون</p></div>
-      <button class="next-btn" onclick="goStep2()">التالي ← اختاري طريقة الإرسال</button>
+      <button class="next-btn" onclick="goStep2()">التالي ← اختاري طريقة الدفع</button>
+      <button class="cancel-btn" onclick="closeCheckout()">إلغاء</button>
+    </div>
+    <!-- STEP 2: PAYMENT METHOD -->
+    <div id="step-payment" style="display:none">
+      <button class="back-btn" onclick="goStep1Pay()">← رجوع</button>
+      <p class="modal-title">طريقة الدفع</p>
+      <p class="modal-sub">اختاري طريقة الدفع المناسبة</p>
+
+      <button class="pay-option" id="pay-cod" onclick="selectPay('cod',this)">
+        <div class="pay-option-icon">💵</div>
+        <div>
+          <div class="pay-option-label">الدفع عند الاستلام</div>
+          <div class="pay-option-desc">تدفعي عند وصول الطلب</div>
+        </div>
+      </button>
+
+      <button class="pay-option" id="pay-orange" onclick="selectPay('orange',this);copyPayNum('orange')">
+        <div class="pay-option-icon">🟠</div>
+        <div>
+          <div class="pay-option-label">اورانج كاش</div>
+          <div class="pay-option-desc">اضغطي لنسخ الرقم · 01211523707</div>
+        </div>
+      </button>
+
+      <button class="pay-option" id="pay-instapay" onclick="selectPay('instapay',this);copyPayNum('instapay')">
+        <div class="pay-option-icon">⚡</div>
+        <div>
+          <div class="pay-option-label">انستاباي</div>
+          <div class="pay-option-desc">اضغطي لنسخ الرقم · 01211523707</div>
+        </div>
+      </button>
+
+      <p class="pay-err" id="pay-err">يرجى اختيار طريقة دفع أولاً</p>
+      <button class="next-btn" onclick="goStep3()">التالي ← اختاري طريقة الإرسال</button>
       <button class="cancel-btn" onclick="closeCheckout()">إلغاء</button>
     </div>
     <div id="step-platform" style="display:none">
-      <button class="back-btn" onclick="goStep1()">← رجوع</button>
+      <button class="back-btn" onclick="goStep2Pay()">← رجوع</button>
       <p class="modal-title">اختاري طريقة الطلب</p>
       <button class="platform-btn wa" onclick="doCheckout('whatsapp')">
         <img src="https://drive.google.com/thumbnail?id=1J-M5eYusdkO13sSjNn3l_cNwfzSMLOUF&sz=w60" alt="">
@@ -1154,6 +1222,15 @@ footer{
       افتحي الرسائل وابعتيلنا الطلب
     </a>
     <button onclick="document.getElementById('successIg').classList.remove('open')" style="background:none;border:none;color:var(--muted);font-family:'Tajawal',sans-serif;font-size:.88rem;cursor:pointer;padding:6px">إغلاق</button>
+  </div>
+</div>
+
+<!-- COPY PAY TOAST -->
+<div class="copy-pay-toast" id="copyPayToast">
+  <div class="copy-pay-icon">✅</div>
+  <div>
+    <div class="copy-pay-title" id="copyPayTitle">تم نسخ الرقم للتحويل عبر انستاباي</div>
+    <div class="copy-pay-sub">بعد إرسال الرسالة لنا برجاء إرسال سكرين شوت بالتحويل</div>
   </div>
 </div>
 
@@ -1384,7 +1461,42 @@ function closeCart(){document.getElementById('cartDrawer').classList.remove('ope
 
 function openCheckout(){if(!cart.length)return;goStep1();document.getElementById('checkoutModal').classList.add('open');}
 function closeCheckout(){document.getElementById('checkoutModal').classList.remove('open');}
-function goStep1(){document.getElementById('step-ship').style.display='block';document.getElementById('step-platform').style.display='none';}
+function goStep1(){
+  document.getElementById('step-ship').style.display='block';
+  document.getElementById('step-payment').style.display='none';
+  document.getElementById('step-platform').style.display='none';
+}
+function goStep1Pay(){
+  document.getElementById('step-ship').style.display='block';
+  document.getElementById('step-payment').style.display='none';
+}
+let selPay='';
+function selectPay(method,btn){
+  selPay=method;
+  document.querySelectorAll('.pay-option').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('pay-err').classList.remove('show');
+}
+let copyPayTimer;
+function copyPayNum(method){
+  const PAY_NUM='01211523707';
+  const labels={'orange':'اورانج كاش','instapay':'انستاباي'};
+  let label=labels[method];
+  // copy number
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(PAY_NUM).catch(()=>{});
+  } else {
+    let ta=document.createElement('textarea');ta.value=PAY_NUM;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}
+    document.body.removeChild(ta);
+  }
+  // show toast
+  let toast=document.getElementById('copyPayToast');
+  document.getElementById('copyPayTitle').textContent='تم نسخ الرقم للتحويل عبر '+label;
+  toast.classList.add('show');
+  clearTimeout(copyPayTimer);
+  copyPayTimer=setTimeout(()=>toast.classList.remove('show'),5000);
+}
 function goStep2(){
   let valid=true;
   let fields=[
@@ -1403,6 +1515,15 @@ function goStep2(){
   });
   if(!valid)return;
   document.getElementById('step-ship').style.display='none';
+  document.getElementById('step-payment').style.display='block';
+}
+function goStep2Pay(){
+  document.getElementById('step-payment').style.display='block';
+  document.getElementById('step-platform').style.display='none';
+}
+function goStep3(){
+  if(!selPay){document.getElementById('pay-err').classList.add('show');return;}
+  document.getElementById('step-payment').style.display='none';
   document.getElementById('step-platform').style.display='block';
 }
 
@@ -1413,9 +1534,11 @@ function buildMsg(){
   let gov=document.getElementById('sh-gov').value;
   let addr=document.getElementById('sh-address').value.trim();
   let color=document.getElementById('sh-color').value.trim();
+  let payLabels={'cod':'الدفع عند الاستلام','orange':'اورانج كاش','instapay':'انستاباي'};
+  let payText=payLabels[selPay]||selPay;
   let lines=cart.map(i=>'- '+i.name+'\n  المقاس: '+i.size+'\n  الكمية: '+i.qty+' x '+i.price+' = '+i.price*i.qty+' جنيه').join('\n\n');
   let total=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  return'أهلاً AML Modest Clothes\nأريد طلب:\n\n'+lines+'\n\nالإجمالي: '+total+' جنيه\n\n--- بيانات الشحن ---\nالاسم: '+name+'\nموبايل 1: '+p1+(p2?'\nموبايل 2: '+p2:'')+'\nالمحافظة: '+gov+'\nالعنوان: '+addr+'\nاللون: '+color;
+  return'أهلاً AML Modest Clothes\nأريد طلب:\n\n'+lines+'\n\nالإجمالي: '+total+' جنيه\n\n--- بيانات الشحن ---\nالاسم: '+name+'\nموبايل 1: '+p1+(p2?'\nموبايل 2: '+p2:'')+'\nالمحافظة: '+gov+'\nالعنوان: '+addr+'\nاللون: '+color+'\nطريقة الدفع: '+payText;
 }
 
 function doCheckout(platform){
