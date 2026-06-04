@@ -551,6 +551,7 @@ footer{
   background:var(--cream);border-radius:24px;padding:30px 26px;
   width:min(440px,92vw);max-height:90vh;overflow-y:auto;
   transform:translateY(24px);transition:transform .3s;text-align:center;
+  position:relative;
 }
 .modal-bg.open .modal-box{transform:translateY(0)}
 .modal-title{font-family:'El Messiri',sans-serif;font-size:1.35rem;color:var(--espresso);margin-bottom:6px}
@@ -582,10 +583,20 @@ footer{
   padding:0 0 12px;display:flex;align-items:center;gap:4px;
 }
 .cancel-btn{
-  background:none;border:none;color:var(--muted);cursor:pointer;
-  font-family:'Tajawal',sans-serif;font-size:.88rem;padding:6px;margin-top:10px;
+  background:#e74c3c;border:none;color:white;cursor:pointer;
+  font-family:'Tajawal',sans-serif;font-size:.88rem;padding:8px 22px;margin-top:10px;
   display:block;margin-left:auto;margin-right:auto;
+  border-radius:10px;font-weight:600;transition:background .2s;
 }
+.cancel-btn:hover{background:#c0392b}
+.modal-close-top{
+  position:absolute;top:14px;left:16px;
+  background:#e74c3c;border:none;color:white;cursor:pointer;
+  font-family:'Tajawal',sans-serif;font-size:.88rem;padding:8px 22px;
+  border-radius:10px;font-weight:600;transition:background .2s;
+  z-index:10;
+}
+.modal-close-top:hover{background:#c0392b}
 .platform-btn{
   display:flex;align-items:center;gap:14px;
   text-align:right;padding:15px 18px;border-radius:16px;
@@ -629,9 +640,21 @@ footer{
   font-size:.88rem;color:var(--muted);line-height:1.8;
 }
 .pay-info-num strong{
-  display:block;font-size:1.1rem;
+  display:inline;font-size:1.1rem;
   color:var(--espresso);letter-spacing:.05em;margin-top:2px;
 }
+.pay-num-row{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:4px;
+}
+.copy-num-btn{
+  background:var(--gold);color:white;
+  border:none;cursor:pointer;
+  width:30px;height:30px;border-radius:8px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:.95rem;transition:background .2s;flex-shrink:0;
+}
+.copy-num-btn:hover{background:var(--latte)}
 
 /* SUCCESS */
 .success-screen{
@@ -1137,6 +1160,7 @@ footer{
 <!-- CHECKOUT MODAL -->
 <div class="modal-bg" id="checkoutModal">
   <div class="modal-box">
+    <button class="modal-close-top" onclick="closeCheckout()" title="إغلاق">✕</button>
     <div id="step-ship">
       <p class="modal-title">بيانات الشحن</p>
       <p class="modal-sub">يرجى ملء البيانات لإتمام الطلب</p>
@@ -1176,7 +1200,14 @@ footer{
             <span>اورانج كاش</span>
           </div>
         </div>
-        <p class="pay-info-num">باستخدام رقم الهاتف الآتي<br><strong>01211523707</strong></p>
+        <p class="pay-info-num">باستخدام رقم الهاتف الآتي<br>
+          <span class="pay-num-row">
+            <strong>01211523707</strong>
+            <button class="copy-num-btn" onclick="copyPhoneNum(this)" title="نسخ الرقم">
+              <i class="ti ti-copy" aria-hidden="true"></i>
+            </button>
+          </span>
+        </p>
       </div>
     </div>
     <div id="step-platform" style="display:none">
@@ -1520,6 +1551,23 @@ function doCheckout(platform){
       document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}
       document.body.removeChild(ta);go();
     }
+  }
+}
+
+function copyPhoneNum(btn){
+  let num='01211523707';
+  let go=()=>{
+    let t=document.getElementById('copyPayToast');
+    document.getElementById('copyPayTitle').textContent='تم نسخ الرقم 📋';
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),3000);
+  };
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(num).then(go).catch(go);
+  } else {
+    let ta=document.createElement('textarea');ta.value=num;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}
+    document.body.removeChild(ta);go();
   }
 }
 
