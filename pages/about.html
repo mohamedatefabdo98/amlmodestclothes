@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AML Modest Clothes — من نحن</title>
+<link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1NK3poi7l0jqFSfhk8sig490geYi3ak5J&sz=w64">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<!-- About page content (always active) -->
+<div class="page active" id="page-about">
+  <div style="padding-top:70px">
+    <section class="about-section">
+      <span class="section-eyebrow" style="display:block;margin-bottom:20px">✦ قصتنا ✦</span>
+      <p class="about-quote">مرحباً بكِ في عالم <em>"أمل"</em><br>حيث الأناقة تحتفي بالاحتشام</p>
+      <p class="about-body">في براند "أمل"، نؤمن أن الأزياء ليست مجرد قطع ملابس نرتديها، بل هي تعبير عن الهوية وقصة شغف نرويها بكل حب وتفانٍ. نقدم قطعاً فنية صُنعت بأعلى درجات الدقة، حيث نعتني بكل خيط وكل تفصيلة.<br><br>علاقتنا بكِ لا تنتهي عند الشراء، بل تبدأ من هناك. نحن معكِ في كل خطوة، نتابع طلبكِ بدقة، ونحرص على أن تصلكِ قطعتكِ كما تمنيتِها تماماً.<br><br><strong style="color:var(--espresso)">شكراً لاختياركِ "أمل".. شكراً لكونكِ جزءاً من حكايتنا.</strong></p>
+    </section>
+    <section class="social-section">
+      <p class="social-title">تواصلي معنا</p>
+      <p class="social-sub">نحن هنا لمساعدتك</p>
+      <div class="social-btns">
+        <a class="social-btn ig" href="https://www.instagram.com/byaml_eg?hl=ar" target="_blank"><img src="https://drive.google.com/thumbnail?id=1TDVY3iGAIlqFErhMLyP5zKw4k94P54gx&sz=w60" alt="" onerror="this.style.display='none'"> انستجرام</a>
+        <a class="social-btn fb" href="https://www.facebook.com/profile.php?id=61560907025097" target="_blank"><img src="https://drive.google.com/thumbnail?id=1FNudTNv7Bnc4KAqwPgo7QCBdTNx4ci4Q&sz=w60" alt="" onerror="this.style.display='none'"> فيسبوك</a>
+        <a class="social-btn wa" href="https://wa.me/201211523707" target="_blank"><img src="https://drive.google.com/thumbnail?id=1J-M5eYusdkO13sSjNn3l_cNwfzSMLOUF&sz=w60" alt="" onerror="this.style.display='none'"> واتساب</a>
+      </div>
+    </section>
+    <footer><p>AML Modest Clothes — جميع الحقوق محفوظة 2025</p></footer>
+  </div>
+</div>
+
+<!-- Hidden pages needed for SPA nav to work -->
+<div class="page" id="page-home"></div>
+<div class="page" id="page-detail"></div>
+
+<script src="../js/nav.js"></script>
+<script src="../js/app.js"></script>
+<script>
+  // Override navigation to go to index.html
+  function goHome() { window.location.href = '../index.html'; }
+  function showAbout() { /* already here */ }
+  function openDetail() { window.location.href = '../index.html'; }
+
+  injectSharedUI();
+  renderCart();
+  renderWishlist();
+</script>
+</body>
+</html>
