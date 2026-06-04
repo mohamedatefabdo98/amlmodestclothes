@@ -597,21 +597,41 @@ footer{
 .platform-btn-label{font-size:1rem;font-weight:700}
 .platform-btn-desc{font-size:.7rem;opacity:.88;font-weight:400}
 
-/* PAYMENT METHOD STEP */
-.pay-option{
-  display:flex;align-items:center;gap:14px;
-  padding:15px 18px;border-radius:16px;margin-bottom:12px;
-  border:2px solid var(--sand2);background:white;
-  cursor:pointer;transition:all .25s;width:100%;text-align:right;
-  font-family:'Tajawal',sans-serif;
+/* PAYMENT INFO BOX */
+.pay-info-box{
+  margin-top:18px;
+  background:var(--sand);
+  border-radius:16px;
+  padding:18px 16px;
+  text-align:center;
+  border:1px solid var(--sand2);
 }
-.pay-option:hover{border-color:var(--latte);background:var(--sand)}
-.pay-option.selected{border-color:var(--espresso);background:var(--sand)}
-.pay-option-icon{font-size:1.8rem;flex-shrink:0;width:40px;text-align:center}
-.pay-option-label{font-size:1rem;font-weight:700;color:var(--espresso)}
-.pay-option-desc{font-size:.75rem;color:var(--muted);font-weight:400}
-.pay-err{color:#c0392b;font-size:.8rem;display:none;margin-bottom:10px;text-align:center}
-.pay-err.show{display:block}
+.pay-info-title{
+  font-family:'El Messiri',sans-serif;
+  font-size:1rem;color:var(--espresso);
+  font-weight:600;margin-bottom:14px;
+}
+.pay-methods{
+  display:flex;justify-content:center;gap:24px;
+  margin-bottom:14px;flex-wrap:wrap;
+}
+.pay-method-item{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.pay-method-item img{
+  height:48px;width:auto;max-width:110px;
+  object-fit:contain;border-radius:10px;
+}
+.pay-method-item span{
+  font-size:.78rem;color:var(--muted);font-weight:500;
+}
+.pay-info-num{
+  font-size:.88rem;color:var(--muted);line-height:1.8;
+}
+.pay-info-num strong{
+  display:block;font-size:1.1rem;
+  color:var(--espresso);letter-spacing:.05em;margin-top:2px;
+}
 
 /* SUCCESS */
 .success-screen{
@@ -1140,45 +1160,27 @@ footer{
       </div>
       <div class="field-group"><label class="field-label">العنوان <span class="req">*</span></label><textarea class="field-input field-textarea" id="sh-address" placeholder="الشارع، المنطقة، رقم المبنى..."></textarea><p class="field-err" id="err-address">يرجى كتابة العنوان</p></div>
       <div class="field-group"><label class="field-label">اللون المطلوب <span class="req">*</span></label><input class="field-input" id="sh-color" type="text" placeholder="اسود، بيج، كحلي..."><p class="field-err" id="err-color">يرجى كتابة اللون</p></div>
-      <button class="next-btn" onclick="goStep2()">التالي ← اختاري طريقة الدفع</button>
+      <button class="next-btn" onclick="goStep2()">التالي ← اختاري طريقة الإرسال</button>
       <button class="cancel-btn" onclick="closeCheckout()">إلغاء</button>
-    </div>
-    <!-- STEP 2: PAYMENT METHOD -->
-    <div id="step-payment" style="display:none">
-      <button class="back-btn" onclick="goStep1Pay()">← رجوع</button>
-      <p class="modal-title">طريقة الدفع</p>
-      <p class="modal-sub">اختاري طريقة الدفع المناسبة</p>
 
-      <button class="pay-option" id="pay-cod" onclick="selectPay('cod',this)">
-        <div class="pay-option-icon">💵</div>
-        <div>
-          <div class="pay-option-label">الدفع عند الاستلام</div>
-          <div class="pay-option-desc">تدفعي عند وصول الطلب</div>
+      <!-- PAYMENT INFO — shown at bottom of shipping form -->
+      <div class="pay-info-box">
+        <p class="pay-info-title">متاح الدفع عبر</p>
+        <div class="pay-methods">
+          <div class="pay-method-item">
+            <img src="https://drive.google.com/thumbnail?id=1MZJ3dfE2Z4m4uGYLihmb1qbE0WgOtXPA&sz=w200" alt="انستا باي" onerror="this.style.display='none'">
+            <span>انستا باي</span>
+          </div>
+          <div class="pay-method-item">
+            <img src="https://drive.google.com/thumbnail?id=1pt9FyWnqEjXlwRPl7-HC_JtOJgyfKeeU&sz=w200" alt="اورانج كاش" onerror="this.style.display='none'">
+            <span>اورانج كاش</span>
+          </div>
         </div>
-      </button>
-
-      <button class="pay-option" id="pay-orange" onclick="selectPay('orange',this);copyPayNum('orange')">
-        <div class="pay-option-icon">🟠</div>
-        <div>
-          <div class="pay-option-label">اورانج كاش</div>
-          <div class="pay-option-desc">اضغطي لنسخ الرقم · 01211523707</div>
-        </div>
-      </button>
-
-      <button class="pay-option" id="pay-instapay" onclick="selectPay('instapay',this);copyPayNum('instapay')">
-        <div class="pay-option-icon">⚡</div>
-        <div>
-          <div class="pay-option-label">انستاباي</div>
-          <div class="pay-option-desc">اضغطي لنسخ الرقم · 01211523707</div>
-        </div>
-      </button>
-
-      <p class="pay-err" id="pay-err">يرجى اختيار طريقة دفع أولاً</p>
-      <button class="next-btn" onclick="goStep3()">التالي ← اختاري طريقة الإرسال</button>
-      <button class="cancel-btn" onclick="closeCheckout()">إلغاء</button>
+        <p class="pay-info-num">باستخدام رقم الهاتف الآتي<br><strong>01211523707</strong></p>
+      </div>
     </div>
     <div id="step-platform" style="display:none">
-      <button class="back-btn" onclick="goStep2Pay()">← رجوع</button>
+      <button class="back-btn" onclick="goStep1()">← رجوع</button>
       <p class="modal-title">اختاري طريقة الطلب</p>
       <button class="platform-btn wa" onclick="doCheckout('whatsapp')">
         <img src="https://drive.google.com/thumbnail?id=1J-M5eYusdkO13sSjNn3l_cNwfzSMLOUF&sz=w60" alt="">
@@ -1463,39 +1465,7 @@ function openCheckout(){if(!cart.length)return;goStep1();document.getElementById
 function closeCheckout(){document.getElementById('checkoutModal').classList.remove('open');}
 function goStep1(){
   document.getElementById('step-ship').style.display='block';
-  document.getElementById('step-payment').style.display='none';
   document.getElementById('step-platform').style.display='none';
-}
-function goStep1Pay(){
-  document.getElementById('step-ship').style.display='block';
-  document.getElementById('step-payment').style.display='none';
-}
-let selPay='';
-function selectPay(method,btn){
-  selPay=method;
-  document.querySelectorAll('.pay-option').forEach(b=>b.classList.remove('selected'));
-  btn.classList.add('selected');
-  document.getElementById('pay-err').classList.remove('show');
-}
-let copyPayTimer;
-function copyPayNum(method){
-  const PAY_NUM='01211523707';
-  const labels={'orange':'اورانج كاش','instapay':'انستاباي'};
-  let label=labels[method];
-  // copy number
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(PAY_NUM).catch(()=>{});
-  } else {
-    let ta=document.createElement('textarea');ta.value=PAY_NUM;ta.style.position='fixed';ta.style.opacity='0';
-    document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}
-    document.body.removeChild(ta);
-  }
-  // show toast
-  let toast=document.getElementById('copyPayToast');
-  document.getElementById('copyPayTitle').textContent='تم نسخ الرقم للتحويل عبر '+label;
-  toast.classList.add('show');
-  clearTimeout(copyPayTimer);
-  copyPayTimer=setTimeout(()=>toast.classList.remove('show'),5000);
 }
 function goStep2(){
   let valid=true;
@@ -1515,15 +1485,6 @@ function goStep2(){
   });
   if(!valid)return;
   document.getElementById('step-ship').style.display='none';
-  document.getElementById('step-payment').style.display='block';
-}
-function goStep2Pay(){
-  document.getElementById('step-payment').style.display='block';
-  document.getElementById('step-platform').style.display='none';
-}
-function goStep3(){
-  if(!selPay){document.getElementById('pay-err').classList.add('show');return;}
-  document.getElementById('step-payment').style.display='none';
   document.getElementById('step-platform').style.display='block';
 }
 
@@ -1538,7 +1499,7 @@ function buildMsg(){
   let payText=payLabels[selPay]||selPay;
   let lines=cart.map(i=>'- '+i.name+'\n  المقاس: '+i.size+'\n  الكمية: '+i.qty+' x '+i.price+' = '+i.price*i.qty+' جنيه').join('\n\n');
   let total=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  return'أهلاً AML Modest Clothes\nأريد طلب:\n\n'+lines+'\n\nالإجمالي: '+total+' جنيه\n\n--- بيانات الشحن ---\nالاسم: '+name+'\nموبايل 1: '+p1+(p2?'\nموبايل 2: '+p2:'')+'\nالمحافظة: '+gov+'\nالعنوان: '+addr+'\nاللون: '+color+'\nطريقة الدفع: '+payText;
+  return'أهلاً AML Modest Clothes\nأريد طلب:\n\n'+lines+'\n\nالإجمالي: '+total+' جنيه\n\n--- بيانات الشحن ---\nالاسم: '+name+'\nموبايل 1: '+p1+(p2?'\nموبايل 2: '+p2:'')+'\nالمحافظة: '+gov+'\nالعنوان: '+addr+'\nاللون: '+color;
 }
 
 function doCheckout(platform){
