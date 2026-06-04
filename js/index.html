@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AML Modest Clothes — المتجر</title>
+<link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1NK3poi7l0jqFSfhk8sig490geYi3ak5J&sz=w64">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- NAV + SEARCH + MOBILE MENU (injected by cart.js) -->
+<div id="navPlaceholder"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-img-col">
+    <img src="https://drive.google.com/thumbnail?id=1VWVhwl0YT7M7yd7K0vN0_SryXnsCldYG&sz=w800" alt="AML Modest Clothes" onerror="this.style.background='var(--sand2)'">
+  </div>
+  <div class="hero-content">
+    <h1 class="hero-title">نصنع لكِ <em>أناقة</em> واسعة<br>تشبه هدوء روحك</h1>
+    <p class="hero-sub">قطع فنية بأعلى درجات الدقة، لكل محجبة تستحق الأفضل</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">تسوقي الآن</button>
+      <a class="btn-outline" href="about.html">اكتشفي المجموعة</a>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-bar">
+  <div class="marquee-track">
+    <span class="marquee-item">✦ شحن لجميع محافظات مصر ✦</span>
+    <span class="marquee-item">✦ جميع الألوان متاحة ✦</span>
+    <span class="marquee-item">✦ مقاسات متعددة ✦</span>
+    <span class="marquee-item">✦ جودة استثنائية ✦</span>
+    <span class="marquee-item">✦ شحن لجميع محافظات مصر ✦</span>
+    <span class="marquee-item">✦ جميع الألوان متاحة ✦</span>
+    <span class="marquee-item">✦ مقاسات متعددة ✦</span>
+    <span class="marquee-item">✦ جودة استثنائية ✦</span>
+  </div>
+</div>
+
+<!-- FEATURED COLLECTIONS -->
+<section class="featured-section">
+  <div class="section-header">
+    <span class="section-eyebrow">✦ اكتشفي ✦</span>
+    <h2 class="section-title">المجموعات المميّزة</h2>
+  </div>
+  <div class="featured-grid">
+    <div class="feat-card" onclick="switchTabByName('winter');document.getElementById('shop').scrollIntoView({behavior:'smooth'})">
+      <img src="https://drive.google.com/thumbnail?id=1fHu0Bm3Eu3A4GdeFJxgvlX-TesGRqOIP&sz=w800" alt="شتوي" onerror="this.style.background='var(--sand2)'">
+      <div class="feat-card-overlay"></div>
+      <div class="feat-card-body">
+        <p class="feat-card-sub">مجموعة</p>
+        <p class="feat-card-name">الشتوي</p>
+        <button class="feat-card-btn">تسوقي الآن ←</button>
+      </div>
+    </div>
+    <div class="feat-card" onclick="switchTabByName('summer');document.getElementById('shop').scrollIntoView({behavior:'smooth'})">
+      <img src="https://drive.google.com/thumbnail?id=1WJ4y_l7qRyiMMsMnhiWXZRahMuFF_j3R&sz=w800" alt="صيفي" onerror="this.style.background='var(--sand2)'">
+      <div class="feat-card-overlay"></div>
+      <div class="feat-card-body">
+        <p class="feat-card-sub">مجموعة</p>
+        <p class="feat-card-name">الصيفي</p>
+        <button class="feat-card-btn">تسوقي الآن ←</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MIXED PRODUCTS STRIP -->
+<section class="mixed-section">
+  <div class="section-header" style="margin-bottom:30px">
+    <span class="section-eyebrow">✦ تشكيلة ✦</span>
+    <h2 class="section-title">منتجات مختارة</h2>
+  </div>
+  <div class="products-grid" id="grid-mixed"></div>
+</section>
+
+<!-- FULL SHOP -->
+<section class="shop-section" id="shop">
+  <div class="section-header">
+    <span class="section-eyebrow">✦ مجموعاتنا ✦</span>
+    <h2 class="section-title">المتجر</h2>
+  </div>
+  <div class="tabs-wrap">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('winter',this)"><i class="ti ti-snowflake" aria-hidden="true"></i> الشتوي</button>
+      <button class="tab-btn" onclick="switchTab('summer',this)"><i class="ti ti-sun" aria-hidden="true"></i> الصيفي</button>
+    </div>
+  </div>
+  <div class="tab-panel active" id="tab-winter">
+    <div class="products-grid" id="grid-winter"></div>
+  </div>
+  <div class="tab-panel" id="tab-summer">
+    <div class="products-grid" id="grid-summer"></div>
+  </div>
+</section>
+
+<div class="features-strip">
+  <div class="feature-item"><div class="feature-icon"><i class="ti ti-truck-delivery" style="font-size:2rem" aria-hidden="true"></i></div><div class="feature-name">شحن لكل مصر</div><div class="feature-desc">توصيل سريع لجميع المحافظات</div></div>
+  <div class="feature-item"><div class="feature-icon"><i class="ti ti-palette" style="font-size:2rem" aria-hidden="true"></i></div><div class="feature-name">كل الألوان</div><div class="feature-desc">تواصلي معنا لاختيار لونك</div></div>
+  <div class="feature-item"><div class="feature-icon"><i class="ti ti-ruler-measure" style="font-size:2rem" aria-hidden="true"></i></div><div class="feature-name">مقاسات شاملة</div><div class="feature-desc">من 50 إلى 120 كيلو</div></div>
+  <div class="feature-item"><div class="feature-icon"><i class="ti ti-award" style="font-size:2rem" aria-hidden="true"></i></div><div class="feature-name">جودة استثنائية</div><div class="feature-desc">خيط وتفصيلة بعناية</div></div>
+</div>
+
+<section id="social" class="social-section">
+  <p class="social-title">تواصلي معنا</p>
+  <p class="social-sub">نحن هنا لمساعدتك في كل خطوة</p>
+  <div class="social-btns">
+    <a class="social-btn ig" href="https://www.instagram.com/byaml_eg?hl=ar" target="_blank">
+      <img src="https://drive.google.com/thumbnail?id=1TDVY3iGAIlqFErhMLyP5zKw4k94P54gx&sz=w60" alt="" onerror="this.style.display='none'"> انستجرام
+    </a>
+    <a class="social-btn fb" href="https://www.facebook.com/profile.php?id=61560907025097" target="_blank">
+      <img src="https://drive.google.com/thumbnail?id=1FNudTNv7Bnc4KAqwPgo7QCBdTNx4ci4Q&sz=w60" alt="" onerror="this.style.display='none'"> فيسبوك
+    </a>
+    <a class="social-btn wa" href="https://wa.me/201211523707" target="_blank">
+      <img src="https://drive.google.com/thumbnail?id=1J-M5eYusdkO13sSjNn3l_cNwfzSMLOUF&sz=w60" alt="" onerror="this.style.display='none'"> واتساب
+    </a>
+  </div>
+</section>
+<footer><p>AML Modest Clothes — جميع الحقوق محفوظة 2025</p></footer>
+
+<!-- DRAWERS + MODALS + TOASTS (injected by cart.js) -->
+<div id="drawersPlaceholder"></div>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script>
+initPage();
+
+function makeCard(p) {
+  let inWish = wishlist.find(x => x.id === p.id);
+  return `<div class="product-card">
+    <div class="card-img-wrap">
+      <img src="${imgUrl(p.imgId)}" alt="${p.name}" loading="lazy" onerror="this.src='https://placehold.co/400x533/EFE4D0/2C1A0E?text=${encodeURIComponent(p.name)}'">
+      <span class="card-badge">${p.badge}</span>
+      <button class="wishlist-btn${inWish?' saved':''}" onclick="toggleWish(event,'${p.id}')" title="أضيفي للمفضلة"><i class="ti ti-heart"></i></button>
+    </div>
+    <div class="card-body">
+      <p class="card-name">${p.name}</p>
+      <div class="card-footer">
+        <span class="card-price">${p.price} جنيه</span>
+        <a class="card-action" href="detail.html?id=${p.id}">التفاصيل</a>
+      </div>
+    </div>
+  </div>`;
+}
+
+document.getElementById('grid-winter').innerHTML = PRODUCTS.winter.map(makeCard).join('');
+document.getElementById('grid-summer').innerHTML = PRODUCTS.summer.map(makeCard).join('');
+const mixed = [PRODUCTS.winter[0], PRODUCTS.winter[1], PRODUCTS.summer[0], PRODUCTS.summer[1], PRODUCTS.summer[2]];
+document.getElementById('grid-mixed').innerHTML = mixed.map(makeCard).join('');
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+function switchTabByName(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('active');
+    if ((id==='winter' && b.textContent.includes('الشتوي')) || (id==='summer' && b.textContent.includes('الصيفي')))
+      b.classList.add('active');
+  });
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+// Handle #social anchor from other pages
+if (location.hash === '#social') {
+  setTimeout(() => document.getElementById('social')?.scrollIntoView({behavior:'smooth'}), 200);
+}
+</script>
+</body>
+</html>
